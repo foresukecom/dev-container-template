@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y curl git vim zsh sudo locales tree
+RUN apt-get update && apt-get install -y curl git vim zsh sudo locales tree software-properties-common
 
 # Set locale to Japanese
 RUN locale-gen ja_JP.UTF-8
@@ -15,7 +15,8 @@ ENV LC_ALL ja_JP.UTF-8
 # RUN npm install -g @vue/cli yarn webpack babel-cli @storybook/cli
 
 # # Golangでの開発時に使用
-RUN apt-get install -y golang-go
+RUN add-apt-repository ppa:longsleep/golang-backports
+RUN apt install -y golang-go
 
 
 # Set working directory
