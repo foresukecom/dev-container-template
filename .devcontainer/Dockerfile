@@ -22,6 +22,10 @@ ENV LC_ALL ja_JP.UTF-8
 RUN add-apt-repository ppa:longsleep/golang-backports
 RUN apt install -y golang-go
 
+# Set Go environment variables
+ENV GOPATH /workspace/go
+ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
+ENV GO111MODULE on
 
 # Set working directory
 WORKDIR /workspace
