@@ -1,7 +1,9 @@
 FROM ubuntu:latest
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y curl git vim zsh sudo locales tree software-properties-common
+RUN apt-get update && \
+    apt-get install -y curl git vim zsh sudo locales tree software-properties-common && \
+    rm -rf /var/lib/apt/lists/* # Clean up apt cache to reduce image size
 
 # Set timezone to JST
 ENV TZ=Asia/Tokyo
@@ -13,22 +15,17 @@ ENV LANG ja_JP.UTF-8
 ENV LANGUAGE ja_JP:ja
 ENV LC_ALL ja_JP.UTF-8
 
-# # Vue開発時に使用
-# RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash -
-# RUN apt-get install -y nodejs
-# RUN npm install -g @vue/cli yarn webpack babel-cli @storybook/cli
-
-# # Golangでの開発時に使用
-RUN add-apt-repository ppa:longsleep/golang-backports
-RUN apt install -y golang-go
-
-# Set Go environment variables
-ENV GOPATH /workspace/go
-ENV PATH $GOPATH/bin:$GOROOT/bin:$PATH
-ENV GO111MODULE on
+# Install Node.js (LTS version 20.x) and the specified npm package
+# NodeSourceのスクリプトがリポジトリの追加、GPGキーの設定、apt-get updateの実行を行います。
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g @anthropic-ai/claude-code && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* # Clean up apt cache and downloaded package files
 
 # Set working directory
 WORKDIR /workspace
 
 # Set default command
+# Note: docker-compose service command in compose.yml overrides this CMD
 CMD [ "/bin/zsh" ]
