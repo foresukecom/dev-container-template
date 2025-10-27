@@ -1,0 +1,60 @@
+{
+  "name": "Hugo Development Container",
+  "dockerComposeFile": "compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // ベース拡張機能
+        "anthropic.claude-code",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "github.vscode-pull-request-github",
+        "mhutchie.git-graph",
+        "ms-ceintl.vscode-language-pack-ja",
+        "seatonjiang.gitmoji-vscode",
+        // Hugo開発拡張機能
+        "budparr.language-hugo-vscode",
+        "eliostruyf.vscode-front-matter",
+        // Markdown拡張機能
+        "yzhang.markdown-all-in-one",
+        "DavidAnson.vscode-markdownlint",
+        // TOML/YAML（設定ファイル用）
+        "tamasfe.even-better-toml",
+        "redhat.vscode-yaml",
+        // Web開発（テーマカスタマイズ用）
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        "[markdown]": {
+          "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+          "editor.formatOnSave": true,
+          "editor.wordWrap": "on"
+        },
+        "[toml]": {
+          "editor.defaultFormatter": "tamasfe.even-better-toml"
+        },
+        "files.associations": {
+          "*.html": "html",
+          "*.md": "markdown"
+        }
+      }
+    }
+  },
+  "postCreateCommand": [
+    "bash",
+    "-c",
+    "if [ -f ~/.zshrc_host ]; then echo 'source ~/.zshrc_host' >> ~/.zshrc; fi"
+  ],
+  "forwardPorts": [1313],
+  "remoteUser": "developer"
+}
