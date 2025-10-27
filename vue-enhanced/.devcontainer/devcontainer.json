@@ -7,6 +7,7 @@
     "vscode": {
       "extensions": [
         // ベース拡張機能
+        "anthropic.claude-code",
         "donjayamanne.githistory",
         "eamodio.gitlens",
         "github.vscode-pull-request-github",
