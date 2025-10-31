@@ -16,12 +16,12 @@ var (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "your_cli_app", // ★★★ ここをあなたのCLIアプリケーション名に置き換えてください ★★★
-	Short: "A sample Go CLI application with Cobra and Viper",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "CobraとViperを使用したサンプルGo CLIアプリケーション",
+	Long: `複数行にわたる詳細な説明です。
+アプリケーションの使用例や目的を記載します。
 
-This application demonstrates basic CLI structure with Cobra and
-configuration management using Viper.`, // 説明を少し変更
+このアプリケーションは、Cobraを使用した基本的なCLI構造と、
+Viperによる設定管理のデモンストレーションです。`, // 説明を少し変更
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -44,6 +44,10 @@ func init() {
 	// Cobra が初期化される前に特定の関数を実行する設定
 	cobra.OnInitialize(initViper)
 
+	// completion コマンドを無効化
+	rootCmd.CompletionOptions.DisableDefaultCmd = true
+
+	// サブコマンドを追加
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(infoCmd)
 }

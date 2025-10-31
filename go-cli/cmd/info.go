@@ -29,8 +29,8 @@ const maskText = "****"
 // infoCmd represents the info command
 var infoCmd = &cobra.Command{
 	Use:   "info",
-	Short: "Display application configuration",
-	Long:  `This command outputs the currently loaded configuration settings in JSON format. Sensitive information will be masked.`,
+	Short: "アプリケーションの設定情報を表示",
+	Long:  `このコマンドは、現在読み込まれている設定内容をJSON形式で出力します。機密情報はマスクされます。`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Viperから全ての設定を取得
 		allSettings := viper.AllSettings()
