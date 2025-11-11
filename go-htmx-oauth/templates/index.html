@@ -1,0 +1,38 @@
+{{define "title"}}ホーム - Go + HTMX + OAuth{{end}}
+
+{{define "content"}}
+<div class="hero">
+    <h1>Go + HTMX + OAuth テンプレートへようこそ</h1>
+    <p>このテンプレートには以下の機能が含まれています：</p>
+    <ul class="features">
+        <li>Goバックエンドサーバー</li>
+        <li>HTMXを使った動的フロントエンド</li>
+        <li>Google OAuth 2.0認証</li>
+        <li>セッション管理</li>
+        <li>レスポンシブデザイン</li>
+    </ul>
+    <div class="cta">
+        <a href="/login" class="btn btn-primary">ログインして始める</a>
+    </div>
+</div>
+
+<div class="section">
+    <h2>使い方</h2>
+    <div class="steps">
+        <div class="step">
+            <h3>1. Google OAuth設定</h3>
+            <p>.envファイルにGoogle Cloud ConsoleのクライアントIDとシークレットを設定します</p>
+        </div>
+        <div class="step">
+            <h3>2. サーバー起動</h3>
+            <p>go run cmd/server/main.go でサーバーを起動します</p>
+        </div>
+        <div class="step">
+            <h3>3. ログイン</h3>
+            <p>Googleアカウントでログインして機能を試してみましょう</p>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{template "base.html" .}}

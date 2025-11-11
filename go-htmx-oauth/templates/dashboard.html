@@ -1,0 +1,39 @@
+{{define "title"}}ダッシュボード - Go + HTMX + OAuth{{end}}
+
+{{define "content"}}
+<div class="dashboard">
+    <div class="welcome-card">
+        <img src="{{.Picture}}" alt="Profile" class="profile-pic">
+        <h1>ようこそ、{{.Name}}さん！</h1>
+        <p class="email">{{.Email}}</p>
+    </div>
+
+    <div class="dashboard-content">
+        <h2>ダッシュボード</h2>
+        <p>ログインに成功しました。ここから様々な機能を利用できます。</p>
+
+        <div class="actions">
+            <button
+                hx-post="/auth/logout"
+                hx-confirm="ログアウトしてもよろしいですか？"
+                class="btn btn-danger">
+                ログアウト
+            </button>
+        </div>
+
+        <div class="info-section">
+            <h3>このテンプレートについて</h3>
+            <p>このアプリケーションは以下の技術で構築されています：</p>
+            <ul>
+                <li><strong>バックエンド:</strong> Go 1.23</li>
+                <li><strong>ルーター:</strong> Gorilla Mux</li>
+                <li><strong>フロントエンド:</strong> HTMX</li>
+                <li><strong>認証:</strong> Google OAuth 2.0</li>
+                <li><strong>セッション:</strong> Gorilla Sessions</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{template "base.html" .}}

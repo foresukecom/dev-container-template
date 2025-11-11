@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{block "title" .}}Go + HTMX + OAuth{{end}}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">Go + HTMX + OAuth</a>
+            <div class="nav-links">
+                <a href="/">ホーム</a>
+                <div id="auth-status" hx-get="/auth/status" hx-trigger="load" hx-swap="innerHTML">
+                    <!-- 認証状態がここに表示されます -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {{block "content" .}}{{end}}
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Go + HTMX + OAuth Template</p>
+        </div>
+    </footer>
+</body>
+</html>
