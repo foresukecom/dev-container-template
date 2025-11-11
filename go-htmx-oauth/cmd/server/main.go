@@ -6,12 +6,18 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"github.com/joho/godotenv"
 	"github.com/yourusername/go-htmx-oauth/internal/handlers"
 	"github.com/yourusername/go-htmx-oauth/internal/middleware"
 	"github.com/yourusername/go-htmx-oauth/internal/models"
 )
 
 func main() {
+	// .envファイルを読み込み
+	if err := godotenv.Load(); err != nil {
+		log.Println("Warning: .envファイルが見つかりません。環境変数から読み込みます。")
+	}
+
 	// 設定読み込み
 	config := models.LoadConfig()
 
