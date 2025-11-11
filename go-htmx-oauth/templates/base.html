@@ -13,7 +13,7 @@
             <a href="/" class="logo">Go + HTMX + OAuth</a>
             <div class="nav-links">
                 <a href="/">ホーム</a>
-                <div id="auth-status" hx-get="/auth/status" hx-trigger="load" hx-swap="innerHTML">
+                <div id="auth-status" hx-get="/auth/nav-status" hx-trigger="load" hx-swap="innerHTML">
                     <!-- 認証状態がここに表示されます -->
                 </div>
             </div>

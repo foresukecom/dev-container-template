@@ -53,6 +53,7 @@ func main() {
 	r.HandleFunc("/auth/google/callback", authHandler.Callback).Methods("GET")
 	r.HandleFunc("/auth/logout", authHandler.Logout).Methods("POST")
 	r.HandleFunc("/auth/status", authHandler.Status).Methods("GET")
+	r.HandleFunc("/auth/nav-status", authHandler.NavStatus).Methods("GET")
 
 	// 認証が必要なページ
 	protected := r.PathPrefix("/").Subrouter()

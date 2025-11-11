@@ -144,3 +144,29 @@ func (h *AuthHandler) Status(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string]bool{"authenticated": false})
 	}
 }
+
+func (h *AuthHandler) NavStatus(w http.ResponseWriter, r *http.Request) {
+	session, err := h.store.Get(r, "auth-session")
+	if err != nil {
+		w.Header().Set("Content-Type", "text/html")
+		w.Write([]byte(`<a href="/login" class="btn btn-primary">ログイン</a>`))
+		return
+	}
+
+	userID, ok := session.Values["user_id"].(string)
+	authenticated := ok && userID != ""
+
+	w.Header().Set("Content-Type", "text/html")
+	if authenticated {
+		userName := fmt.Sprint(session.Values["user_name"])
+		html := fmt.Sprintf(`
+			<span class="user-name">%s</span>
+			<form hx-post="/auth/logout" hx-confirm="ログアウトしてもよろしいですか？" style="display: inline;">
+				<button type="submit" class="btn btn-danger btn-sm">ログアウト</button>
+			</form>
+		`, userName)
+		w.Write([]byte(html))
+	} else {
+		w.Write([]byte(`<a href="/login" class="btn btn-primary">ログイン</a>`))
+	}
+}
