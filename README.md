@@ -41,6 +41,13 @@
 - Cobra CLI開発特化
 - Go開発ツール一式
 
+#### Chrome拡張開発環境 (`chrome-extension-enhanced/`)
+- ベースコンテナ + Node.js 20.x
+- TypeScript + Vite（高速ビルド）
+- Manifest V3対応
+- Chrome/Chromiumプリインストール
+- Popup、Background、Content Script、Options ページのサンプル付き
+
 ## セットアップ手順
 
 ### 独立型コンテナの場合（go-enhanced）
@@ -77,6 +84,11 @@ code .
 
 # Go CLI開発の場合
 cd go-cli
+code .
+# VS CodeでDev Containerを選択
+
+# Chrome拡張開発の場合
+cd chrome-extension-enhanced
 code .
 # VS CodeでDev Containerを選択
 ```
