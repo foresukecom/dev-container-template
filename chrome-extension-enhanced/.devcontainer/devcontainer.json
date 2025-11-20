@@ -1,0 +1,64 @@
+{
+  "name": "Chrome Extension Development Container",
+  "dockerComposeFile": "compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // ベース拡張機能
+        "anthropic.claude-code",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "github.vscode-pull-request-github",
+        "mhutchie.git-graph",
+        "ms-ceintl.vscode-language-pack-ja",
+        "seatonjiang.gitmoji-vscode",
+        // Chrome拡張開発専用拡張機能
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-next",
+        "formulahendry.auto-rename-tag",
+        "christian-kohler.path-intellisense",
+        "bradlc.vscode-tailwindcss",
+        "pranaygp.vscode-css-peek",
+        "zignd.html-css-class-completion"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        // JavaScript/TypeScript関連設定
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ],
+        "typescript.preferences.quoteStyle": "single",
+        "javascript.preferences.quoteStyle": "single",
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    }
+  },
+  "postCreateCommand": [
+    "bash",
+    "-c",
+    "if [ -f ~/.zshrc_host ]; then echo 'source ~/.zshrc_host' >> ~/.zshrc; fi"
+  ],
+  "forwardPorts": [5173, 8080],
+  "remoteUser": "developer"
+}

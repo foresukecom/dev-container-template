@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+      # ホストの設定ファイルをマウント
+      - ~/.zshrc:/home/developer/.zshrc_host:ro
+      - ~/.zsh_history:/home/developer/.zsh_history
+      - ~/.gitconfig:/home/developer/.gitconfig:ro
+      - ~/.ssh:/home/developer/.ssh:ro
+    command: sleep infinity
+    environment:
+      # 拡張機能開発用の環境変数
+      - NODE_ENV=development
