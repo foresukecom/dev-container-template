@@ -4,6 +4,11 @@ FROM devcontainer-base:latest
 # rootユーザーに切り替えてパッケージインストール
 USER root
 
+# MySQLクライアントのインストール
+RUN apt-get update && apt-get install -y \
+    mysql-client \
+    && rm -rf /var/lib/apt/lists/*
+
 # Goのインストール（マルチアーキテクチャ対応）
 ENV GO_VERSION=1.23.4
 RUN ARCH=$(uname -m | sed 's/x86_64/amd64/g' | sed 's/aarch64/arm64/g') \

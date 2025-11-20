@@ -158,13 +158,36 @@ make build
 
 ### データベース接続
 
-VSCode の SQLTools 拡張機能を使用してデータベースに接続できます:
+#### VSCode SQLTools拡張機能を使用する場合
 
-- Host: localhost
-- Port: 3306
-- User: appuser
-- Password: apppassword
-- Database: appdb
+開発コンテナには `mtxr.sqltools` と `mtxr.sqltools-driver-mysql` がプリインストールされています。
+
+1. VSCodeのサイドバーでSQLToolsアイコンをクリック
+2. 「+」ボタンで新しい接続を追加
+3. 以下の情報を入力:
+   - Connection Name: MySQL (任意)
+   - Server Address: mysql
+   - Port: 3306
+   - Database: appdb
+   - Username: appuser
+   - Password: apppassword
+
+#### コマンドラインから接続する場合
+
+開発コンテナ内のターミナルで以下のコマンドを実行:
+
+```bash
+# 対話的にMySQLに接続
+mysql -h mysql -u appuser -papppassword appdb
+
+# SQLファイルを実行
+mysql -h mysql -u appuser -papppassword appdb < your-script.sql
+
+# クエリを直接実行
+mysql -h mysql -u appuser -papppassword appdb -e "SELECT * FROM users;"
+```
+
+**注意**: 開発コンテナ内からは`-h mysql`でMySQLコンテナに接続します。ホストOSからは`-h localhost`または`-h 127.0.0.1`を使用してください。
 
 ## 主な機能
 
