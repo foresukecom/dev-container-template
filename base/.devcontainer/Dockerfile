@@ -46,8 +46,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # JUSTタスクランナーのインストール
-RUN ARCH=$(uname -m | sed 's/x86_64/x86_64/g' | sed 's/aarch64/aarch64/g') \
-    && curl -L "https://github.com/casey/just/releases/latest/download/just-${ARCH}-unknown-linux-musl.tar.gz" -o just.tar.gz \
+RUN JUST_VERSION=$(curl -s https://api.github.com/repos/casey/just/releases/latest | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/') \
+    && ARCH=$(uname -m) \
+    && curl -L "https://github.com/casey/just/releases/download/${JUST_VERSION}/just-${JUST_VERSION}-${ARCH}-unknown-linux-musl.tar.gz" -o just.tar.gz \
     && tar -xzf just.tar.gz \
     && mv just /usr/local/bin/just \
     && chmod +x /usr/local/bin/just \
