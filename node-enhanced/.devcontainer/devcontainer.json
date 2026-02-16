@@ -1,0 +1,69 @@
+{
+  "name": "Node.js Development Container",
+  "dockerComposeFile": "compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // ベース拡張機能
+        "anthropic.claude-code",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "github.vscode-pull-request-github",
+        "mhutchie.git-graph",
+        "ms-ceintl.vscode-language-pack-ja",
+        "seatonjiang.gitmoji-vscode",
+        // Node.js/JavaScript/TypeScript専用拡張機能
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "christian-kohler.npm-intellisense",
+        "christian-kohler.path-intellisense",
+        "formulahendry.auto-rename-tag",
+        "wix.vscode-import-cost",
+        "streetsidesoftware.code-spell-checker",
+        // デバッグ・テスト
+        "orta.vscode-jest",
+        "hbenl.vscode-test-explorer",
+        // REST API開発
+        "humao.rest-client"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        // エディタ設定
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        // TypeScript/JavaScript設定
+        "typescript.preferences.quoteStyle": "single",
+        "javascript.preferences.quoteStyle": "single",
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "javascript.updateImportsOnFileMove.enabled": "always",
+        // ESLint設定
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ],
+        // npm設定
+        "npm.packageManager": "npm"
+      }
+    }
+  },
+  "postCreateCommand": [
+    "bash",
+    "-c",
+    "if [ -f ~/.zshrc_host ]; then echo 'source ~/.zshrc_host' >> ~/.zshrc; fi"
+  ],
+  "forwardPorts": [3000, 4000, 5173, 8080],
+  "remoteUser": "developer"
+}
