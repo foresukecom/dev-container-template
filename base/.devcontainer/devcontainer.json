@@ -12,7 +12,8 @@
         "github.vscode-pull-request-github",
         "mhutchie.git-graph",
         "ms-ceintl.vscode-language-pack-ja",
-        "seatonjiang.gitmoji-vscode"
+        "seatonjiang.gitmoji-vscode",
+        "Google.gemini-cli-vscode-ide-companion"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
