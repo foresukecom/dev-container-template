@@ -80,6 +80,15 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # Claude Codeのインストール
 RUN curl -fsSL https://claude.ai/install.sh | bash
 
+# Node.js LTSとGemini CLIのインストール
+USER root
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && npm install -g @google/gemini-cli
+USER $USERNAME
+
 # 基本的な.zshrc設定
 RUN echo 'export ZSH="$HOME/.oh-my-zsh"' >> ~/.zshrc \
     && echo 'ZSH_THEME="robbyrussell"' >> ~/.zshrc \
