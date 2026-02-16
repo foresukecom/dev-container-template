@@ -1,0 +1,31 @@
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      # プロジェクトファイルのマウント
+      - ../..:/workspaces:cached
+      # ホストのzsh設定をマウント（存在する場合）
+      - ~/.zshrc:/home/developer/.zshrc_host:ro
+      - ~/.zsh_history:/home/developer/.zsh_history:cached
+      - ~/.zsh_aliases:/home/developer/.zsh_aliases:ro
+      # Git設定のマウント
+      - ~/.gitconfig:/home/developer/.gitconfig:ro
+      - ~/.ssh:/home/developer/.ssh:ro
+      # Node.js関連のキャッシュマウント
+      - node-modules-cache:/home/developer/.npm
+      - pnpm-cache:/home/developer/.local/share/pnpm
+    environment:
+      - SHELL=/bin/zsh
+      - NPM_CONFIG_PREFIX=/home/developer/.npm-global
+      - NODE_ENV=development
+    ports:
+      - "5173:5173"   # Vite開発サーバー
+      - "8788:8788"   # Wrangler Pages devサーバー
+    command: sleep infinity
+    user: developer
+
+volumes:
+  node-modules-cache:
+  pnpm-cache:
