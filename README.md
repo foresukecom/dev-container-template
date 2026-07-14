@@ -5,44 +5,57 @@
 ## 構成
 
 ### ベースコンテナ (`base/`)
+
 すべての開発環境で共通利用するベースイメージ
 
 **含まれる機能:**
 - Ubuntu 22.04ベース
 - 日本語ロケール・タイムゾーン
 - zsh + oh-my-zsh
-- 基本開発ツール（git, vim, make等）
+- 基本開発ツール（git, vim, make, just等）
+- Claude Code / Gemini CLI
 - ホスト設定ファイルのマウント
 
-### 独立型コンテナ
+### 派生テンプレート
 
-#### Go開発環境 (`go-enhanced/`)
-- Ubuntu 22.04ベース（独立構成）
-- Go 1.23.4（Apple Silicon/Intel対応）
-- Go開発ツール（goimports, gopls, dlv, golangci-lint等）
-- VS Code Go拡張機能
-- マルチアーキテクチャ対応（amd64/arm64自動判定）
+すべてベースイメージ（`devcontainer-base:latest`）から派生します。
 
-### ベースコンテナ依存環境
+#### Go CLI開発環境 (`go-cli/`)
+- Go 1.25.3（マルチアーキテクチャ対応 amd64/arm64）
+- Go開発ツール一式（goimports, gopls, dlv, staticcheck, golangci-lint）
+- Cobra CLI開発特化（cobra-cli）
+- Cobra製CLIのサンプル実装 + GoReleaser + GitHub Actionsリリース設定付き
+
+#### Go + HTMX + OAuth開発環境 (`go-htmx-oauth/`)
+- Go 1.23.4
+- Google OAuth認証付きWebアプリのサンプル実装
+- Airによるホットリロード対応
+
+#### Go + HTMX + OAuth + MySQL開発環境 (`go-htmx-oauth-mysql/`)
+- `go-htmx-oauth` + MySQL（compose でDB起動、初期化SQL、リポジトリ層）
+
+#### Node.js開発環境 (`node-enhanced/`)
+- Node.js 24.x
+- yarn, pnpm
+- TypeScript, ts-node, nodemon, pm2, eslint, prettier
+
+#### Cloudflare開発環境 (`cloudflare-vite/`)
+- Node.js 24.x + pnpm
+- wrangler, TypeScript, ts-node
+- Cloudflare Pages + Vite + Hono 向け
 
 #### Vue.js開発環境 (`vue-enhanced/`)
-- ベースコンテナ + Node.js 20.x
+- Node.js 20.x
 - Vue CLI, create-vue
 - yarn, pnpm
 - VS Code Vue拡張機能
 
 #### Hugo開発環境 (`hugo-enhanced/`)
-- ベースコンテナ + Hugo Extended 0.150.1
+- Hugo Extended 0.150.1（マルチアーキテクチャ対応 amd64/arm64）
 - Node.js 20.x（PostCSS、Tailwind等対応）
-- マルチアーキテクチャ対応（amd64/arm64自動判定）
-
-#### Go CLI開発環境 (`go-cli/`)
-- ベースコンテナ + Go 1.23.4
-- Cobra CLI開発特化
-- Go開発ツール一式
 
 #### Chrome拡張開発環境 (`chrome-extension-enhanced/`)
-- ベースコンテナ + Node.js 20.x
+- Node.js 20.x
 - TypeScript + Vite（高速ビルド）
 - Manifest V3対応
 - Chrome/Chromiumプリインストール
@@ -50,48 +63,23 @@
 
 ## セットアップ手順
 
-### 独立型コンテナの場合（go-enhanced）
-
-ベースイメージのビルドは不要です。直接使用できます。
-
-```bash
-cd go-enhanced
-code .
-# VS CodeでDev Containerを選択
-```
-
-### ベースコンテナ依存環境の場合
-
-#### 1. ベースイメージのビルド
+### 1. ベースイメージのビルド
 
 ```bash
 cd base/.devcontainer
 docker build -t devcontainer-base:latest .
 ```
 
-#### 2. 各コンテナの使用
+### 2. 各コンテナの使用
 
 ```bash
-# Vue.js開発の場合
-cd vue-enhanced
-code .
-# VS CodeでDev Containerを選択
-
-# Hugo開発の場合
-cd hugo-enhanced
-code .
-# VS CodeでDev Containerを選択
-
-# Go CLI開発の場合
+# 例: Go CLI開発の場合
 cd go-cli
 code .
 # VS CodeでDev Containerを選択
-
-# Chrome拡張開発の場合
-cd chrome-extension-enhanced
-code .
-# VS CodeでDev Containerを選択
 ```
+
+他のテンプレートも同様に、各ディレクトリで `code .` を実行してDev Containerを起動します。
 
 ## ホスト設定の連携
 
@@ -104,7 +92,7 @@ code .
 
 ## 新しい開発環境の追加
 
-### パターン1: ベースイメージから派生
+ベースイメージから派生させます。
 
 ```dockerfile
 FROM devcontainer-base:latest
@@ -114,25 +102,14 @@ RUN apt-get update && apt-get install -y python3
 USER developer
 ```
 
-### パターン2: 独立構成（Apple Silicon対応が必要な場合）
-
-go-enhancedを参考に、Ubuntu 22.04から直接ビルドし、マルチアーキテクチャ対応を実装します。
+Apple Silicon (M1/M2) 対応が必要なバイナリは、アーキテクチャ自動判定を入れてください。
 
 ```dockerfile
-FROM ubuntu:22.04
-# ... 基本設定 ...
-# アーキテクチャ自動判定の例
 RUN ARCH=$(uname -m | sed 's/x86_64/amd64/g' | sed 's/aarch64/arm64/g') \
     && wget -O tool.tar.gz "https://example.com/tool-${ARCH}.tar.gz"
 ```
 
 ## トラブルシューティング
-
-### Apple Silicon (M1/M2) でのビルドエラー
-
-- go-enhancedは自動的にarm64に対応します
-- hugo-enhancedもマルチアーキテクチャ対応済みです
-- 他の環境でエラーが出る場合は、アーキテクチャ判定を追加してください
 
 ### ベースイメージが見つからないエラー
 
@@ -142,3 +119,8 @@ docker build -t devcontainer-base:latest .
 ```
 
 でベースイメージをビルドしてから、派生コンテナを起動してください。
+
+### Apple Silicon (M1/M2) でのビルドエラー
+
+- go-cli / hugo-enhanced はマルチアーキテクチャ対応済みです
+- 他の環境でエラーが出る場合は、アーキテクチャ判定を追加してください
