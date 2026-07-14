@@ -4,8 +4,8 @@ FROM devcontainer-base:latest
 # rootユーザーに切り替えてパッケージインストール
 USER root
 
-# Node.js 20.xのインストール
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+# Node.js 24.xのインストール
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 

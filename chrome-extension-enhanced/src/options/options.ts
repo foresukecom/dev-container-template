@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function loadOptions(): void {
     chrome.storage.sync.get(['setting', 'enableFeature'], (result) => {
       if (settingInput) {
-        settingInput.value = result.setting || 'default_value';
+        settingInput.value = (result.setting as string) || 'default_value';
       }
       if (enableFeature) {
-        enableFeature.checked = result.enableFeature || false;
+        enableFeature.checked = (result.enableFeature as boolean) || false;
       }
     });
   }

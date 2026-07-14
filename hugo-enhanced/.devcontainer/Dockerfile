@@ -3,7 +3,7 @@ FROM devcontainer-base:latest
 USER root
 
 # HUGO_VERSION を指定（最新版を使用）
-ARG HUGO_VERSION=0.150.1
+ARG HUGO_VERSION=0.164.0
 ARG TARGETARCH
 
 # Hugo Extended版のインストール（アーキテクチャ自動判定）
@@ -19,7 +19,7 @@ RUN ARCH=$(case ${TARGETARCH} in \
     && chmod +x /usr/local/bin/hugo
 
 # Node.js（PostCSSやTailwind等のツールに必要）
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
     && apt-get install -y nodejs \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

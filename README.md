@@ -21,13 +21,13 @@
 すべてベースイメージ（`devcontainer-base:latest`）から派生します。
 
 #### Go CLI開発環境 (`go-cli/`)
-- Go 1.25.3（マルチアーキテクチャ対応 amd64/arm64）
+- Go 1.26.5（マルチアーキテクチャ対応 amd64/arm64）
 - Go開発ツール一式（goimports, gopls, dlv, staticcheck, golangci-lint）
 - Cobra CLI開発特化（cobra-cli）
 - Cobra製CLIのサンプル実装 + GoReleaser + GitHub Actionsリリース設定付き
 
 #### Go + HTMX + OAuth開発環境 (`go-htmx-oauth/`)
-- Go 1.23.4
+- Go 1.26.5
 - Google OAuth認証付きWebアプリのサンプル実装
 - Airによるホットリロード対応
 
@@ -45,17 +45,17 @@
 - Cloudflare Pages + Vite + Hono 向け
 
 #### Vue.js開発環境 (`vue-enhanced/`)
-- Node.js 20.x
+- Node.js 24.x
 - Vue CLI, create-vue
 - yarn, pnpm
 - VS Code Vue拡張機能
 
 #### Hugo開発環境 (`hugo-enhanced/`)
-- Hugo Extended 0.150.1（マルチアーキテクチャ対応 amd64/arm64）
-- Node.js 20.x（PostCSS、Tailwind等対応）
+- Hugo Extended 0.164.0（マルチアーキテクチャ対応 amd64/arm64）
+- Node.js 24.x（PostCSS、Tailwind等対応）
 
 #### Chrome拡張開発環境 (`chrome-extension-enhanced/`)
-- Node.js 20.x
+- Node.js 24.x
 - TypeScript + Vite（高速ビルド）
 - Manifest V3対応
 - Chrome/Chromiumプリインストール

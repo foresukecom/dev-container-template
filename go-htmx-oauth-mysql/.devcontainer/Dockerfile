@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Goのインストール（マルチアーキテクチャ対応）
-ENV GO_VERSION=1.23.4
+ENV GO_VERSION=1.26.5
 RUN ARCH=$(uname -m | sed 's/x86_64/amd64/g' | sed 's/aarch64/arm64/g') \
     && wget -O go.tar.gz "https://go.dev/dl/go${GO_VERSION}.linux-${ARCH}.tar.gz" \
     && tar -C /usr/local -xzf go.tar.gz \

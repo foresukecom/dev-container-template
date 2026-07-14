@@ -5,7 +5,7 @@
 ## 含まれる機能
 
 ### Hugo
-- **Hugo Extended** v0.139.3
+- **Hugo Extended** v0.164.0
   - SCSS/SASS処理対応
   - WebP画像処理対応
   - その他拡張機能

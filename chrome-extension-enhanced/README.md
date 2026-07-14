@@ -16,7 +16,7 @@ TypeScript + Vite を使用した、モダンな Chrome 拡張機能開発テン
 - **ビルドツール**: Vite 5.x
 - **リンター**: ESLint + TypeScript ESLint
 - **フォーマッター**: Prettier
-- **開発環境**: Dev Container (Node.js 20.x + Chrome)
+- **開発環境**: Dev Container (Node.js 24.x + Chrome)
 
 ## ディレクトリ構造
 
@@ -61,7 +61,7 @@ chrome-extension-enhanced/
 
 または、ローカル環境に以下をインストール：
 
-- Node.js 20.x 以降
+- Node.js 24.x 以降
 - npm または pnpm
 
 ### Dev Container での起動（推奨）

@@ -49,7 +49,7 @@ export default defineConfig({
           dest: '.',
         },
         {
-          src: 'public/icons',
+          src: 'src/content/content.css',
           dest: '.',
         },
       ],

@@ -5,7 +5,7 @@ FROM devcontainer-base:latest
 USER root
 
 # Node.jsとnpmのインストール
-ENV NODE_VERSION=20.x
+ENV NODE_VERSION=24.x
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - \
     && apt-get install -y nodejs
 
