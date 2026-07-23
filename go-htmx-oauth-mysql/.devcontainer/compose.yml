@@ -13,6 +13,9 @@ services:
       # Git設定のマウント
       - ~/.gitconfig:/home/developer/.gitconfig:ro
       - ~/.ssh:/home/developer/.ssh:ro
+      # Claude Code設定のマウント（プロジェクト横断で共有・書き込みあり）
+      - ~/.claude:/home/developer/.claude
+      - ~/.claude.json:/home/developer/.claude.json
       # Go関連のキャッシュマウント
       - go-mod-cache:/home/developer/go/pkg/mod
       - go-build-cache:/home/developer/.cache/go-build

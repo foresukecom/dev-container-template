@@ -89,6 +89,10 @@ code .
 - `~/.zsh_history` → 履歴の永続化
 - `~/.gitconfig` → Git設定の共有
 - `~/.ssh` → SSH鍵の共有
+- `~/.claude` → Claude Code のユーザースコープ設定（settings.json, CLAUDE.md, skills, agents, commands 等）と認証情報の共有
+- `~/.claude.json` → Claude Code のユーザー状態（テーマ、ユーザースコープの MCP サーバー設定等）の共有
+
+`~/.claude` は Claude Code がセッション状態を書き込むため読み書き可でマウントしています。ホスト側で編集した設定・スキルは、コンテナ内の Claude Code でもそのまま使えます。
 
 ## 新しい開発環境の追加
 

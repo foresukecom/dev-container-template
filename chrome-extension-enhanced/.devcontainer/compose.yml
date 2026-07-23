@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   devcontainer:
     build:
@@ -12,6 +10,9 @@ services:
       - ~/.zsh_history:/home/developer/.zsh_history
       - ~/.gitconfig:/home/developer/.gitconfig:ro
       - ~/.ssh:/home/developer/.ssh:ro
+      # Claude Code設定のマウント（プロジェクト横断で共有・書き込みあり）
+      - ~/.claude:/home/developer/.claude
+      - ~/.claude.json:/home/developer/.claude.json
     command: sleep infinity
     environment:
       # 拡張機能開発用の環境変数

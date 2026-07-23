@@ -13,6 +13,9 @@ services:
       # Git設定のマウント
       - ~/.gitconfig:/home/developer/.gitconfig:ro
       - ~/.ssh:/home/developer/.ssh:ro
+      # Claude Code設定のマウント（プロジェクト横断で共有・書き込みあり）
+      - ~/.claude:/home/developer/.claude
+      - ~/.claude.json:/home/developer/.claude.json
     environment:
       - SHELL=/bin/zsh
     command: sleep infinity
