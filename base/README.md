@@ -32,6 +32,9 @@ docker build -t devcontainer-base:latest .
 - `~/.zsh_aliases` → `/home/developer/.zsh_aliases`（読み取り専用）
 - `~/.gitconfig` → `/home/developer/.gitconfig`（読み取り専用）
 - `~/.ssh` → `/home/developer/.ssh`（読み取り専用）
+- `~/.claude` → `/home/developer/.claude`（読み書き可）
+- `~/.claude.json` → `/home/developer/.claude.json`（読み書き可）
+- `~/Documents/shared` → `/home/developer/shared`（読み書き可、`SHARED_DIR` で変更可）
 
 ホストの.zshrcがある場合、コンテナ起動時に自動的に読み込まれます。
 

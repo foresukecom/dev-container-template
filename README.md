@@ -91,8 +91,23 @@ code .
 - `~/.ssh` → SSH鍵の共有
 - `~/.claude` → Claude Code のユーザースコープ設定（settings.json, CLAUDE.md, skills, agents, commands 等）と認証情報の共有
 - `~/.claude.json` → Claude Code のユーザー状態（テーマ、ユーザースコープの MCP サーバー設定等）の共有
+- `~/Documents/shared` → `/home/developer/shared`（全コンテナ共通の共有ディレクトリ、読み書き可）
 
 `~/.claude` は Claude Code がセッション状態を書き込むため読み書き可でマウントしています。ホスト側で編集した設定・スキルは、コンテナ内の Claude Code でもそのまま使えます。
+
+### 共有ディレクトリ
+
+ホストの `~/Documents/shared` が、すべてのコンテナの `/home/developer/shared` にマウントされます。プロジェクトをまたいで使うスクリプトやメモ、データセットの置き場として使えます。読み書き可なので、コンテナ内で作成したファイルはホスト側にも残ります。
+
+共有元を変えたい場合は、Dev Container を起動する前に `SHARED_DIR` を設定します（compose.yml の編集は不要）。
+
+```bash
+export SHARED_DIR=~/Documents/another-dir
+```
+
+マウント先は `/workspaces` の外に置いています。`/workspaces` にはプロジェクトが既にマウントされているため、そこに重ねると VS Code のワークスペース内に共有ディレクトリが紛れ込むためです。
+
+なお、ホスト側のディレクトリが存在しないまま起動すると Docker が root 所有の空ディレクトリを作ってしまい、コンテナ内の `developer` ユーザーから書き込めなくなります。共有元は事前に作成しておいてください。
 
 ## 新しい開発環境の追加
 
