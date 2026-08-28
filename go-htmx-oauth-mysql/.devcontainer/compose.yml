@@ -16,6 +16,8 @@ services:
       # Claude Code設定のマウント（プロジェクト横断で共有・書き込みあり）
       - ~/.claude:/home/developer/.claude
       - ~/.claude.json:/home/developer/.claude.json
+      # GitHub CLI認証情報のマウント（プロジェクト横断で共有・書き込みあり）
+      - ~/.config/gh:/home/developer/.config/gh
       # ホスト共有ディレクトリ（全コンテナ共通・書き込みあり）
       - ${SHARED_DIR:-${HOME}/Documents/shared}:/home/developer/shared:cached
       # Go関連のキャッシュマウント

@@ -9,6 +9,7 @@
 - 日本のタイムゾーン（Asia/Tokyo）
 - zshとoh-my-zsh
 - 基本開発ツール（git, vim, make, build-essential等）
+- GitHub CLI（gh）※gitのcredential helperとして設定済み
 - ホストの.zsh設定ファイルのマウント対応
 
 ## ベースイメージのビルド
@@ -34,6 +35,7 @@ docker build -t devcontainer-base:latest .
 - `~/.ssh` → `/home/developer/.ssh`（読み取り専用）
 - `~/.claude` → `/home/developer/.claude`（読み書き可）
 - `~/.claude.json` → `/home/developer/.claude.json`（読み書き可）
+- `~/.config/gh` → `/home/developer/.config/gh`（読み書き可）
 - `~/Documents/shared` → `/home/developer/shared`（読み書き可、`SHARED_DIR` で変更可）
 
 ホストの.zshrcがある場合、コンテナ起動時に自動的に読み込まれます。
