@@ -14,6 +14,7 @@
 - zsh + oh-my-zsh
 - 基本開発ツール（git, vim, make, just等）
 - Claude Code / Gemini CLI
+- GitHub CLI（gh）
 - ホスト設定ファイルのマウント
 
 ### 派生テンプレート
@@ -91,9 +92,30 @@ code .
 - `~/.ssh` → SSH鍵の共有
 - `~/.claude` → Claude Code のユーザースコープ設定（settings.json, CLAUDE.md, skills, agents, commands 等）と認証情報の共有
 - `~/.claude.json` → Claude Code のユーザー状態（テーマ、ユーザースコープの MCP サーバー設定等）の共有
+- `~/.config/gh` → GitHub CLI の認証情報の共有（読み書き可）
 - `~/Documents/shared` → `/home/developer/shared`（全コンテナ共通の共有ディレクトリ、読み書き可）
 
 `~/.claude` は Claude Code がセッション状態を書き込むため読み書き可でマウントしています。ホスト側で編集した設定・スキルは、コンテナ内の Claude Code でもそのまま使えます。
+
+### GitHub 連携（gh）
+
+すべてのコンテナに GitHub CLI（`gh`）が入っています。Claude Code から issue / PR を扱う場合もこれを使います。
+
+認証はホストの `~/.config/gh` を共有しているため、**どれか 1 つのコンテナで一度ログインすれば、以後すべてのコンテナ・すべてのプロジェクトで有効**です。ホスト側に gh をインストールする必要はありません。
+
+```bash
+# 初回のみ、コンテナ内で実行
+mkdir -p ~/.config/gh   # ホスト側で事前に作成しておく場合は不要
+gh auth login
+```
+
+`gh auth login` は「GitHub.com」→「HTTPS」→「Login with a web browser」を選ぶと、8 桁のコードが表示されます。ホスト側のブラウザで `https://github.com/login/device` を開いてコードを入力すれば完了です。
+
+`gh` は git の credential helper としてイメージ側（`/etc/gitconfig`）に設定済みなので、ログイン後は HTTPS リモートに対して `git push` / `git pull` もそのまま通ります。SSH 鍵の設定は不要です。
+
+ホストの `~/.gitconfig` は読み取り専用でマウントしているため、`gh auth setup-git` は実行しないでください（書き込みに失敗します）。同じ設定が system スコープに入っているので、実行する必要もありません。
+
+> 認証トークンはコンテナ内に鍵管理サービスがないため、ホストの `~/.config/gh/hosts.yml` に平文で保存されます（ヘッドレス Linux での gh の標準動作）。気になる場合は権限の絞られた Fine-grained PAT を使ってください。
 
 ### 共有ディレクトリ
 
@@ -107,7 +129,7 @@ export SHARED_DIR=~/Documents/another-dir
 
 マウント先は `/workspaces` の外に置いています。`/workspaces` にはプロジェクトが既にマウントされているため、そこに重ねると VS Code のワークスペース内に共有ディレクトリが紛れ込むためです。
 
-なお、ホスト側のディレクトリが存在しないまま起動すると Docker が root 所有の空ディレクトリを作ってしまい、コンテナ内の `developer` ユーザーから書き込めなくなります。共有元は事前に作成しておいてください。
+なお、ホスト側のディレクトリが存在しないまま起動すると Docker が root 所有の空ディレクトリを作ってしまい、コンテナ内の `developer` ユーザーから書き込めなくなります。共有元は事前に作成しておいてください（`~/.config/gh` も同様です）。
 
 ## 新しい開発環境の追加
 
