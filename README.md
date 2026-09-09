@@ -59,8 +59,9 @@
 - Node.js 24.x
 - TypeScript + Vite（高速ビルド）
 - Manifest V3対応
-- Chrome/Chromiumプリインストール
+- Playwright + Chromium による E2E テスト（マルチアーキテクチャ対応 amd64/arm64）
 - Popup、Background、Content Script、Options ページのサンプル付き
+- アイコンはSVGからビルド時にPNG生成
 
 ## セットアップ手順
 
@@ -163,5 +164,5 @@ docker build -t devcontainer-base:latest .
 
 ### Apple Silicon (M1/M2) でのビルドエラー
 
-- go-cli / hugo-enhanced はマルチアーキテクチャ対応済みです
+- go-cli / hugo-enhanced / chrome-extension-enhanced はマルチアーキテクチャ対応済みです
 - 他の環境でエラーが出る場合は、アーキテクチャ判定を追加してください
