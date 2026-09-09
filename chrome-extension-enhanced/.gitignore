@@ -5,6 +5,9 @@ extension.zip
 # icons/icon.svg から生成されるため追跡しない（npm run generate:icons）
 public
 
+# ストア提出用スクリーンショット（npm run screenshots で生成）
+screenshots
+
 # Playwright
 test-results
 playwright-report

@@ -18,6 +18,10 @@ export default tseslint.config(
       globals: {
         console: 'readonly',
         process: 'readonly',
+        URL: 'readonly',
+        // page.evaluate / worker.evaluate のコールバック内で参照される
+        document: 'readonly',
+        chrome: 'readonly',
       },
     },
   },

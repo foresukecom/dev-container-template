@@ -8,6 +8,7 @@ TypeScript + Vite を使用した、モダンな Chrome 拡張機能開発テン
 - **Vite**: 高速なビルド（ファイル監視による自動リビルド）
 - **Manifest V3**: 最新の Chrome 拡張機能仕様に対応
 - **Playwright**: 実際に Chromium へ拡張機能を読み込んで動かす E2E テスト付き
+- **ストア提出対応**: 審査に必要な 1280x800 のスクリーンショットを自動生成
 - **Dev Container**: VS Code で即座に開発を開始できる環境（amd64 / arm64 両対応）
 - **完全なサンプル**: Popup、Background、Content Script、Options ページを含む
 
@@ -48,7 +49,8 @@ chrome-extension-enhanced/
 ├── icons/
 │   └── icon.svg            # アイコンの元データ（これ1つを差し替える）
 ├── scripts/
-│   └── generate-icons.mjs  # SVG → PNG 変換
+│   ├── generate-icons.mjs    # SVG → PNG 変換
+│   └── take-screenshots.mjs  # ストア提出用スクリーンショット生成
 ├── manifest.json           # 拡張機能のマニフェスト
 ├── vite.config.ts          # Vite設定
 ├── playwright.config.ts    # Playwright設定
@@ -57,7 +59,7 @@ chrome-extension-enhanced/
 └── README.md
 ```
 
-`public/` と `dist/` は生成物のため git 管理外です。
+`public/`、`dist/`、`screenshots/` は生成物のため git 管理外です。
 
 ## セットアップ
 
@@ -131,6 +133,29 @@ npm run type-check
 ```bash
 npm run package   # extension.zip を生成
 ```
+
+### ストア提出用スクリーンショット
+
+```bash
+npm run screenshots
+```
+
+`screenshots/` に 1280x800 の PNG を3枚生成します（Chrome ウェブストアが
+受け付けるサイズは 1280x800 または 640x400）。
+
+| ファイル | 内容 |
+| --- | --- |
+| `01-options.png` | オプションページ全体 |
+| `02-popup.png` | ポップアップを背景に合成したもの |
+| `03-content-script.png` | content script がページ上で動作している様子 |
+
+ポップアップは幅300px程度しかなく、1280x800でそのまま撮ると余白だらけになるため、
+実寸で撮ってから背景の中央に合成しています。背景色や配置は
+[scripts/take-screenshots.mjs](scripts/take-screenshots.mjs) で調整してください。
+
+> **撮れないもの**: Playwright が撮影できるのはページの内容だけです。
+> 「ツールバーのアイコンからポップアップがぶら下がっている」といった
+> ブラウザUIを含む画像は撮れないため、必要なら別途モックアップに合成してください。
 
 ## Chrome への拡張機能の読み込み
 
