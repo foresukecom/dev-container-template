@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function saveOptions(): void {
     const settings = {
       setting: settingInput?.value || 'default_value',
-      enableFeature: enableFeature?.checked || false
+      enableFeature: enableFeature?.checked || false,
     };
 
     chrome.storage.sync.set(settings, () => {
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetOptions(): void {
     const defaultSettings = {
       setting: 'default_value',
-      enableFeature: false
+      enableFeature: false,
     };
 
     chrome.storage.sync.set(defaultSettings, () => {
