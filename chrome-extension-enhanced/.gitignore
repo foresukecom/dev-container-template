@@ -1,5 +1,16 @@
 node_modules
 dist
+extension.zip
+
+# icons/icon.svg から生成されるため追跡しない（npm run generate:icons）
+public
+
+# Playwright
+test-results
+playwright-report
+blob-report
+playwright/.cache
+
 *.log
 .DS_Store
 .vscode/*

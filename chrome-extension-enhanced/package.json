@@ -3,27 +3,33 @@
   "version": "1.0.0",
   "description": "A modern Chrome extension template with TypeScript and Vite",
   "scripts": {
-    "dev": "vite build --watch --mode development",
-    "build": "vite build",
-    "preview": "vite preview",
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "dev": "node scripts/generate-icons.mjs && vite build --watch --mode development",
+    "build": "node scripts/generate-icons.mjs && vite build",
     "type-check": "tsc --noEmit",
-    "lint": "eslint src",
-    "format": "prettier --write \"src/**/*.{ts,html,css}\""
+    "lint": "eslint src tests scripts",
+    "format": "prettier --write \"{src,tests,scripts}/**/*.{ts,mjs,html,css}\" \"*.{ts,mjs,json}\"",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "package": "npm run build && cd dist && zip -qr ../extension.zip . && echo 'created extension.zip'"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
     "@types/chrome": "^0.2.2",
+    "@types/node": "^26.5.0",
     "eslint": "^10.7.0",
     "prettier": "^3.9.5",
+    "sharp": "^0.35.4",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.64.0",
-    "vite": "^8.1.4",
-    "vite-plugin-static-copy": "^4.1.1"
+    "vite": "^8.1.4"
   },
   "keywords": [
     "chrome-extension",
     "typescript",
-    "vite"
+    "vite",
+    "playwright"
   ],
   "author": "",
   "license": "MIT"
