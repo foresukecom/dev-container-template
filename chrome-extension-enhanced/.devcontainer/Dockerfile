@@ -13,9 +13,13 @@ RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
 # Playwright実行に必要なOSパッケージ
 # xvfb: Chrome拡張機能のテストはヘッドレスシェルでは動かないため、仮想ディスプレイ上で実行する
 # zip:  ストア提出用のパッケージ作成（npm run package）に使う
+# fonts-noto-cjk: これが無いとスクリーンショット内の日本語が豆腐（□）になる。
+#                 Playwrightのinstall-depsが入れるfonts-liberationはLatinのみ
 RUN apt-get update && apt-get install -y \
     xvfb \
     zip \
+    fonts-noto-cjk \
+    fonts-noto-color-emoji \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
