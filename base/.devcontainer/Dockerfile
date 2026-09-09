@@ -87,7 +87,28 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && npm install -g @google/gemini-cli
+
+# GitHub CLIのインストール（公式aptリポジトリ / amd64・arm64両対応）
+RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+        -o /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+        > /etc/apt/sources.list.d/github-cli.list \
+    && apt-get update \
+    && apt-get install -y gh \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# ghをgitのcredential helperに設定（HTTPSリモートへのpush/pull用）
+# ~/.gitconfig はホストからread-onlyでマウントされるため、systemスコープ(/etc/gitconfig)に設定する
+RUN git config --system credential."https://github.com".helper "!/usr/bin/gh auth git-credential" \
+    && git config --system credential."https://gist.github.com".helper "!/usr/bin/gh auth git-credential"
+
 USER $USERNAME
+
+# ~/.config をdeveloper所有で作成しておく
+# （先に作らないと ~/.config/gh マウント時にDockerが親ディレクトリをroot所有で作ってしまう）
+RUN mkdir -p /home/developer/.config
 
 # 基本的な.zshrc設定
 RUN echo 'export ZSH="$HOME/.oh-my-zsh"' >> ~/.zshrc \
