@@ -4,10 +4,13 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
+      # プロジェクトファイルのマウント
       - ../..:/workspaces:cached
-      # ホストの設定ファイルをマウント
+      # ホストのzsh設定をマウント（存在する場合）
       - ~/.zshrc:/home/developer/.zshrc_host:ro
-      - ~/.zsh_history:/home/developer/.zsh_history
+      - ~/.zsh_history:/home/developer/.zsh_history:cached
+      - ~/.zsh_aliases:/home/developer/.zsh_aliases:ro
+      # Git設定のマウント
       - ~/.gitconfig:/home/developer/.gitconfig:ro
       - ~/.ssh:/home/developer/.ssh:ro
       # Claude Code設定のマウント（プロジェクト横断で共有・書き込みあり）
@@ -17,7 +20,21 @@ services:
       - ~/.config/gh:/home/developer/.config/gh
       # ホスト共有ディレクトリ（全コンテナ共通・書き込みあり）
       - ${SHARED_DIR:-${HOME}/Documents/shared}:/home/developer/shared:cached
-    command: sleep infinity
+      # Node.js関連のキャッシュマウント
+      - node-modules-cache:/home/developer/.npm
+      - yarn-cache:/home/developer/.yarn
+      - pnpm-cache:/home/developer/.local/share/pnpm
+      # Playwrightのブラウザ（コンテナ再作成のたびに再取得しないよう永続化）
+      - playwright-browsers:/ms-playwright
     environment:
-      # 拡張機能開発用の環境変数
+      - SHELL=/bin/zsh
       - NODE_ENV=development
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+    command: sleep infinity
+    user: developer
+
+volumes:
+  node-modules-cache:
+  yarn-cache:
+  pnpm-cache:
+  playwright-browsers:

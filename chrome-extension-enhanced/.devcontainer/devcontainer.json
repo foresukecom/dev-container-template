@@ -17,12 +17,10 @@
         // Chrome拡張開発専用拡張機能
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
-        "ms-vscode.vscode-typescript-next",
+        "ms-playwright.playwright",
         "formulahendry.auto-rename-tag",
         "christian-kohler.path-intellisense",
-        "bradlc.vscode-tailwindcss",
-        "pranaygp.vscode-css-peek",
-        "zignd.html-css-class-completion"
+        "pranaygp.vscode-css-peek"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
@@ -34,12 +32,7 @@
         // JavaScript/TypeScript関連設定
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "eslint.validate": [
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact"
-        ],
+        "eslint.validate": ["javascript", "typescript"],
         "typescript.preferences.quoteStyle": "single",
         "javascript.preferences.quoteStyle": "single",
         "[javascript]": {
@@ -54,11 +47,13 @@
       }
     }
   },
+  // Playwrightのブラウザはpackage.jsonのバージョンと一致させる必要があるため、
+  // イメージに焼かずにコンテナ作成時に取得する（/ms-playwright はボリュームで永続化）
   "postCreateCommand": [
     "bash",
     "-c",
-    "if [ -f ~/.zshrc_host ]; then echo 'source ~/.zshrc_host' >> ~/.zshrc; fi"
+    "if [ -f ~/.zshrc_host ]; then echo 'source ~/.zshrc_host' >> ~/.zshrc; fi && npm install && npx playwright install chromium"
   ],
-  "forwardPorts": [5173, 8080],
+  "forwardPorts": [5173],
   "remoteUser": "developer"
 }
